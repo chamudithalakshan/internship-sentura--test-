@@ -13,13 +13,14 @@ export default function UserPage() {
     const [name, setName] = useState('')
     const [uid, setUid] = useState('')
     const [email, setEmail] = useState('')
-
+    const [token,setToken] = useState('wys_84a7qaHZ0F8pJ1iEsjhWZyJ72DykCO11BgxO')
     const addUser = () => {
         // Make a POST request to your server
-        fetch('/api/users', {
+        fetch('https://73ffef27f91c463695b25d6ac6444e68.weavy.io/api/users', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
           body: JSON.stringify({
             uid: uid,
@@ -29,6 +30,7 @@ export default function UserPage() {
         })
           .then(response => response.json())
           .then(newUser => {
+            console.log(newUser)
             // Update the local state with the new user
             // setUsers([...users, newUser]);
           })
@@ -40,10 +42,10 @@ export default function UserPage() {
   return (
     <div>
         <h1>user</h1>
-        <TextField onChange={(e)=>setUid(e.target.value)} value={uid} id="outlined-basic" label="Uid" variant="outlined" />
-<TextField onChange={(e)=>setName(e.target.value)} value={name} id="filled-basic" label="Name" variant="outlined" />
-<TextField onChange={(e)=>setEmail(e.target.value)} value={email} id="standard-basic" label="Address" variant="outlined" />
-<Button onClick={addUser} variant="contained">add</Button>
+        <TextField onChange={(e)=>setUid(e.target.value)} value={uid} id="outlined-basic" label="Uid" variant="outlined" required/>
+        <TextField onChange={(e)=>setName(e.target.value)} value={name} id="filled-basic" label="Name" variant="outlined" required/>
+        <TextField onChange={(e)=>setEmail(e.target.value)} value={email} id="standard-basic" label="Email" variant="outlined" type='email' required/>
+<Button onClick={addUser} variant="contained">Add User</Button>
 <Button variant="contained">delete</Button>
 
 
@@ -59,7 +61,7 @@ export default function UserPage() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {/* {rows.map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -72,7 +74,7 @@ export default function UserPage() {
               <TableCell align="right">{row.carbs}</TableCell>
               <TableCell align="right">{row.protein}</TableCell>
             </TableRow>
-          ))}
+          ))} */}
         </TableBody>
       </Table>
     </TableContainer>
